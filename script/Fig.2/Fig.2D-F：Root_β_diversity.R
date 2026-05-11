@@ -33,7 +33,6 @@ set.seed(123)
 bc_R_adonis_Site <- adonis2(bc_dist_R~Site, data=bc_R_pcoa_metadata, permutations = 999)
 bc_R_adonis_Site
 R_adonis_Site <- paste0(" Site adonis R2= ", round(bc_R_adonis_Site$R2, 3), "   P = ", bc_R_adonis_Site$`Pr(>F)`)
-# write.table(bc_R_adonis_Site,"Root_Site_adonis_check.txt",sep = "\t",quote = FALSE)
 
 
 #visualization
@@ -75,6 +74,7 @@ ggsave("../../figures/Fig.2/bc_dis_Root_Site.pdf", bc_Root_pcoa_g12_, width = 8,
 #Root Village Plants
 metadata_R_V <- subset(metadata_R, Site == "Village")
 table(metadata_R_V$Plant_name)
+
 col_Plant <- c(
   "Ageratum conyzoides"        = "#FFFF99",
   "Bidens alba"                = "#999900",
@@ -107,13 +107,11 @@ set.seed(110)
 bc_R_V_adonis_Plant <- adonis2(bc_dist_R_V~ScientificNames, data=metadata_R_V, permutations = 999)
 bc_R_V_adonis_Plant
 R_V_P_adonis <- paste0(" Plant adonis R2= ", round(bc_R_V_adonis_Plant$R2, 3), "   P = ", bc_R_V_adonis_Plant$`Pr(>F)`)
-# write.table(bc_R_V_adonis_Plant,"Root_Village_Plant_adonis_check.txt",sep = "\t",quote = FALSE)
 
 set.seed(123)
 bc_R_V_adonis_Environment <- adonis2(bc_dist_R_V~Environment, data=metadata_R_V, permutations = 999)
 bc_R_V_adonis_Environment
 R_V_adonis_Environment <- paste0("Environment adonis R2= ", round(bc_R_V_adonis_Environment$R2, 3), "   P = ", bc_R_V_adonis_Environment$`Pr(>F)`, " ns")
-# write.table(bc_R_V_adonis_Environment,"Root_Village_Environment_Plant_adonis_check.txt",sep = "\t",quote = FALSE)
 
 
 #Visualization | ggplot 形状与颜色存在冲突，分两次组合图片
@@ -146,7 +144,6 @@ bc_R_V_pcoa_g12 <- ggplot(bc_R_V_pcoa_metadata, aes(PCoA1, PCoA2, fill=Scientifi
          )
 
 bc_R_V_pcoa_g12 
-
 ggsave("../../figures/Fig.2/bc_Root_Village_Plant_shape.pdf", bc_R_V_pcoa_g12, width = 9.5, height =6)
 
 
@@ -154,7 +151,7 @@ ggsave("../../figures/Fig.2/bc_Root_Village_Plant_shape.pdf", bc_R_V_pcoa_g12, w
 bc_R_V_pcoa_g12_ <- ggplot(bc_R_V_pcoa_metadata, aes(PCoA1, PCoA2, fill=ScientificNames, shape = Environment)) + 
   geom_point(alpha=0.7, color = "black",shape = 21, size=7) +  
   scale_fill_manual(values=Plant_color, name = 'Plant') +
-  scale_shape_manual(values=c(21,24)) +  #  ,24 三角形
+  scale_shape_manual(values=c(21,24)) +  
   labs(x=paste("PCoA 1 (", format(100 * bc_R_V_eig[1] / sum(bc_R_V_eig), digits=4), "%)", sep=""),
        y=paste("PCoA 2 (", format(100 * bc_R_V_eig[2] / sum(bc_R_V_eig), digits=4), "%)", sep=""),
        title = paste(R_V_P_adonis, "\n",R_V_adonis_Environment)) +  
@@ -195,18 +192,15 @@ set.seed(123)
 bc_R_H_adonis_Plant <- adonis2(bc_dist_R_H~ScientificNames, data=metadata_R_H, permutations = 999)
 bc_R_H_adonis_Plant
 R_H_P_adonis <- paste0(" Plant adonis R2= ", round(bc_R_H_adonis_Plant$R2, 3), "   P = ", bc_R_H_adonis_Plant$`Pr(>F)`)
-#write.table(bc_R_H_adonis_Plant,"Root_Factory_Plant_adonis_check.txt",sep = "\t",quote = FALSE)
 
 set.seed(123)
 bc_R_H_adonis_Environment <- adonis2(bc_dist_R_H~Environment, data=metadata_R_H, permutations = 999)
 bc_R_H_adonis_Environment
 R_H_adonis_Environment <- paste0("Environment adonis R2= ", round(bc_R_H_adonis_Environment$R2, 3), "   P = ", bc_R_H_adonis_Environment$`Pr(>F)`)
-#write.table(bc_R_H_adonis_Environment,"Root_Factory_Environment_Plant_adonis_check.txt",sep = "\t",quote = FALSE)
 
 
 #Visualization
 bc_R_H_pcoa_metadata$ScientificNames <- as.factor(bc_R_H_pcoa_metadata$ScientificNames)
-
 
 bc_R_H_pcoa_g12 <- ggplot(bc_R_H_pcoa_metadata, aes(PCoA1, PCoA2, fill=ScientificNames, shape = Environment)) + 
   geom_point(alpha=0.7, color = "black", size=7) +  
@@ -230,7 +224,6 @@ bc_R_H_pcoa_g12 <- ggplot(bc_R_H_pcoa_metadata, aes(PCoA1, PCoA2, fill=Scientifi
   )
 
 bc_R_H_pcoa_g12 
-
 ggsave("../../figures/Fig.2/bc_Root_Factory_Plant_shape.pdf", bc_R_H_pcoa_g12, width = 9.5, height =6)
 
 
@@ -255,7 +248,6 @@ bc_R_H_pcoa_g12_ <- ggplot(bc_R_H_pcoa_metadata, aes(PCoA1, PCoA2, fill=Scientif
     fill = guide_legend(order = 1,override.aes = list(size = 5)))
 
 bc_R_H_pcoa_g12_ 
-
 ggsave("../../figures/Fig.2/bc_Root_Factory_Plant_color.pdf", bc_R_H_pcoa_g12_, width = 9.5, height =6)
 
 

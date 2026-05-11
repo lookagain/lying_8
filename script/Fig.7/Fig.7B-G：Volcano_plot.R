@@ -38,7 +38,7 @@ CK_range <- range(CK$log2fc)
 CK_yrange <- range(CK$log10qvalue)
 
 
-###绘图——基础火山图###
+###Visualization
 p1 <- ggplot(CK, aes(x =log2fc, y=log10qvalue , colour=Sig)) + 
   geom_point(alpha=0.65, size=0.8) +  
   scale_color_manual(values=c("Down" = "#00CCFF", "No change" = "grey60","Up" = "#FF0000")) + xlim(c(-10, 10)) +ylim(c(0, 0.8)) +  
@@ -59,7 +59,7 @@ p1 <- ggplot(CK, aes(x =log2fc, y=log10qvalue , colour=Sig)) +
         legend.title = element_blank()) 
 p1
 
-ggsave("CK_Volcano_map.pdf", plot = p1, width = 6.5, height = 5.5)
+ggsave("../../figures/Fig.7/CK_Volcano_map.pdf", plot = p1, width = 6.5, height = 5.5)
 
 
 
@@ -93,7 +93,7 @@ p2 <- ggplot(Cd, aes(x =log2fc, y=log10qvalue , colour=Sig)) +
         legend.title = element_blank()) 
 p2
 
-ggsave("Cd_Volcano_map.pdf", plot = p2, width = 6.5, height = 5.5)
+ggsave("../../figures/Fig.7/Cd_Volcano_map.pdf", plot = p2, width = 6.5, height = 5.5)
 
 
 
@@ -129,7 +129,7 @@ p3 <- ggplot(Mn, aes(x =log2fc, y=log10qvalue , colour=Sig)) +
         legend.title = element_blank()) 
 p3
 
-ggsave("Mn_Volcano_map.pdf", plot = p3, width = 6.5, height = 5.5)
+ggsave("../../figures/Fig.7/Mn_Volcano_map.pdf", plot = p3, width = 6.5, height = 5.5)
 
 
 
@@ -164,7 +164,7 @@ p4 <- ggplot(CK_Cd, aes(x =log2fc, y=log10qvalue , colour=Sig)) +
         legend.title = element_blank()) 
 p4
 
-ggsave("CK_Cd_Volcano_map.pdf", plot = p4, width = 6.5, height = 5.5)
+ggsave("../../figures/Fig.7/CK_Cd_Volcano_map.pdf", plot = p4, width = 6.5, height = 5.5)
 
 
 
@@ -201,7 +201,7 @@ p5 <- ggplot(CK_Mn, aes(x =log2fc, y=log10qvalue , colour=Sig)) +
         legend.title = element_blank()) 
 p5
 
-ggsave("CK_Mn_Volcano_map.pdf", plot = p5, width = 6.5, height = 5.5)
+ggsave("../../figures/Fig.7/CK_Mn_Volcano_map.pdf", plot = p5, width = 6.5, height = 5.5)
 
 
 
@@ -243,7 +243,7 @@ p6 <- ggplot(CK_Mn_SynCom, aes(x =log2fc, y=log10qvalue , colour=Sig)) +
         legend.title = element_blank()) 
 p6
 
-ggsave("CK_NIL_vs_Mn_SynCom_Volcano_map.pdf", plot = p6, width = 6.5, height = 5.5)
+ggsave("../../figures/Fig.7/CK_NIL_vs_Mn_SynCom_Volcano_map.pdf", plot = p6, width = 6.5, height = 5.5)
 
 
 

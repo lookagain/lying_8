@@ -2,7 +2,6 @@ library(ggplot2)
 library(ComplexHeatmap)
 library(circlize)
 
-# library(stringr)
 
 pwd <- dirname(rstudioapi::getSourceEditorContext()$path)
 setwd(pwd)
@@ -101,6 +100,6 @@ go_order <- Heatmap(
 )
 go_order
 
-dev.copy(pdf, "metal_4Clusters_logfc_2_qval_0.05_enriched_go_heatmap.pdf", width = 5.5, height = 7.5)
+dev.copy(pdf, "../../figures/Fig.7/metal_4Clusters_logfc_2_qval_0.05_enriched_go_heatmap.pdf", width = 5.5, height = 7.5)
 dev.off()
 

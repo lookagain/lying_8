@@ -26,7 +26,7 @@ Site <- metadata_sub[metadata_sub$Site =="Village",]
 
 #
 ASV_sub <- ASV[,colnames(ASV) %in% Site$SampleID]
-otutab <- ASV_sub[apply(ASV_sub, 1, function(x) any(x > 0.005)), ]   #core ASV (ASV在至少一个样本中相对丰度大于0.5%)
+otutab <- ASV_sub[apply(ASV_sub, 1, function(x) any(x > 0.005)), ]   
 taxon <- taxonomy[rownames(taxonomy) %in% rownames(otutab),]
 
 
@@ -50,16 +50,16 @@ dim(r.matrix )
 
 igraph <- igraph::graph_from_adjacency_matrix(
   r.matrix,
-  mode = "undirected",    # 根据你的网络类型选择
-  weighted = TRUE,        # 保留相关性值作为权重
-  diag = FALSE            # 忽略对角线
+  mode = "undirected",    
+  weighted = TRUE,        
+  diag = FALSE           
 )
 
 
 #
 A = igraph
 
-#去掉冗余的边（multiple edges、loop edges）
+#去掉冗余的边
 A<-simplify(igraph)
 
 #提取权重
@@ -69,11 +69,11 @@ which(df_weight <=0)
 #加入ASV丰度信息
 data <- rowSums(otutab)
 data1=as.data.frame(data)
-df_igraph_size = data1[V(A)$name,] # 筛选对应ASV属性
-df_igraph_size2 = log10(df_igraph_size)#数据进行转换
+df_igraph_size = data1[V(A)$name,] 
+df_igraph_size2 = log10(df_igraph_size)
 V(A)$Abundance = df_igraph_size2
 
-#加入物种信息,使用不同颜色表示,选择总丰度前9的门，其他归为others
+#加入物种信息,使用不同颜色表示,选择总丰度前6的门，其他归为others
 data2=taxon
 data2$Phylum <- gsub("^p__", "", data2$Phylum)
 data2$ASV <- rownames(data2)
@@ -112,7 +112,7 @@ table(data2$color)
 igraph_color = data2[V(A)$name,2]
 V(A)$color = as.character(igraph_color)
 
-#生成网络图的结点标签（OTU id）和degree属性；
+#生成网络图的结点标签和degree属性；
 V(A)$label <- V(A)$name
 V(A)$degree <- degree(A)
 

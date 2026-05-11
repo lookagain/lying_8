@@ -38,7 +38,6 @@ metadata_R_sig_test$group <- as.factor(metadata_R_sig_test$group)
 res = KwWlx(data = metadata_R_sig_test, i= 3)
 res[[1]]
 res[[2]]
-# write.table(res[[2]], "Root_Site_Tukey_result.txt", sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
 
 
 #sig label
@@ -71,7 +70,6 @@ metadata_S_sig_test$group <- as.factor(metadata_S_sig_test$group)
 res = KwWlx(data = metadata_S_sig_test, i= 3)
 res[[1]]
 res[[2]]
-# write.table(res[[2]], "Soil_Site_Tukey_result.txt", sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
 
 
 #sig label
@@ -93,9 +91,7 @@ metadata_S_SE$Site <- factor(metadata_S_SE$Site,levels = c("Village","Factory"))
 metadata_S_SE$niche <- "Soil"
 
 
-##########
-###组合图， Area_Microbiome  区域作为分面  
-
+#
 Site_SE <- rbind(metadata_R_SE, metadata_S_SE)
 Site_sig <- rbind(R_sig, S_sig)
 
@@ -110,7 +106,7 @@ Site_shannon$Site <- factor(Site_shannon$Site,levels = c("Village","Factory"))
 Site_shannon$niche <- factor(Site_shannon$niche, levels = c("Root","Soil"))
 
 
-#成图
+#
 p_Site <- ggplot(Site_SE, aes(Site, shannon_entropy, fill=Site)) + 
   geom_bar(stat="identity", width = 0.8,color="black") +# 添加color="black"来设置柱子的边框颜色
   facet_grid( ~ niche, scales = "free", space = "free", switch = "x") +
@@ -170,7 +166,6 @@ colnames(metadata_R_V_sig_test)[2] <- "group"
 res = KwWlx(data = metadata_R_V_sig_test, i= 3)
 res[[1]]
 res[[2]]
-#write.table(res[[2]], "Root_Village_Environment_Tukey_result.txt", sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
 
 
 #sig label
@@ -198,7 +193,6 @@ colnames(metadata_S_V_sig_test)[2] <- "group"
 res = KwWlx(data = metadata_S_V_sig_test, i= 3)
 res[[1]]
 res[[2]]
-#write.table(res[[2]], "Soil_Village_Environment_Tukey_result.txt", sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
 
 
 #sig label
@@ -215,7 +209,7 @@ SV_sig <- data.frame(
 
 
 
-###组合图， Area_Microbiome  区域作为分面  Root and Soil | Village
+# Root and Soil | Village
 Village_SE <- rbind(metadata_R_V_SE, metadata_S_V_SE)
 Village_sig <- rbind(RV_sig, SV_sig)
 
@@ -230,12 +224,12 @@ Village_shannon$Environment <- factor(Village_shannon$Environment,levels = c("in
 Village_shannon$niche <- factor(Village_shannon$niche, levels = c("Root","Soil"))
 
 
-#成图  Village(indoor vs outdoor) | Root and Soil
+# Village(indoor vs outdoor) | Root and Soil
 
 col_environemt <- c("indoor" = "#99CC00","outdoor" ="#FFCC00")
 
 pv_environment <- ggplot(Village_SE, aes(Environment, shannon_entropy, fill=Environment)) + 
-  geom_bar(stat="identity", width = 0.8,color="black") +# 添加color="black"来设置柱子的边框颜色
+  geom_bar(stat="identity", width = 0.8,color="black") +
   facet_grid( ~ niche, scales = "free", space = "free", switch = "x") +
   scale_fill_manual(values=col_environemt) +
   xlab("") + ylab("Shannon index ") + 
@@ -257,19 +251,19 @@ pv_environment <- ggplot(Village_SE, aes(Environment, shannon_entropy, fill=Envi
         plot.title =element_text(size=14,color="black", hjust = 0.5, vjust = 1))+
   geom_jitter(data = Village_shannon, aes(Environment, shannon_entropy), size=3, width = 0.2, alpha = 0.6) +
   geom_errorbar(data = Village_SE, aes(ymin=shannon_entropy-se, ymax=shannon_entropy+se), width=0.2, colour = "black") +
-  scale_y_continuous(limits = c(NA, 11), breaks = seq(0, 10.0, by = 2.5)) # 设置 y 轴的最大值
+  scale_y_continuous(limits = c(NA, 11), breaks = seq(0, 10.0, by = 2.5)) 
 
 p2 <-pv_environment +  
   stat_pvalue_manual(
-    Village_sig,                                          #数据框
-    label = "{p.adj.signif}",              #选择的标签，"{p.adj}{p.adj.signif}" 能选择两列作为标签
-    y.position = "y.position",        #标签的位置，需要依据成图的数据计算出来。字符刻度  中  每个字符代表一个单位，如 A 就是1， B就是2等等
-    xmin = "xmin",                            #标签下的比较线的起始位置，与xmax搭配使用，控制比较线的长度
-    xmax = "xmax",                           #
-    tip.length = 0.01,                      #比较线的粗细
+    Village_sig,                                        
+    label = "{p.adj.signif}",              
+    y.position = "y.position",        
+    xmin = "xmin",                           
+    xmax = "xmax",                           
+    tip.length = 0.01,                      
     size = 4,
     label.fontface = "italic" ,
-    coord.flip = F                     #T：翻转标签， F：不翻转，默认不翻转
+    coord.flip = F                     
   ) 
 
 p2
@@ -292,7 +286,7 @@ colnames(metadata_R_H_sig_test)[2] <- "group"
 res = KwWlx(data = metadata_R_H_sig_test, i= 3)
 res[[1]]
 res[[2]]
-#write.table(res[[2]], "Root_Factory_Environment_Tukey_result.txt", sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
+
 
 #sig label
 RF_sig <- data.frame(
@@ -312,6 +306,7 @@ metadata_S_H <- subset(metadata_S, Site == "Factory")
 metadata_S_H_SE <- summarySE(metadata_S_H, measurevar= "shannon_entropy", groupvars= "Environment")
 metadata_S_H_SE$niche <- "Soil"
 
+
 # Significance test    Factory Environment
 metadata_S_H_sig_test <- metadata_S_H[,c("SampleID","Environment","shannon_entropy")]
 colnames(metadata_S_H_sig_test)[2] <- "group" 
@@ -319,7 +314,7 @@ colnames(metadata_S_H_sig_test)[2] <- "group"
 res = KwWlx(data = metadata_S_H_sig_test, i= 3)
 res[[1]]
 res[[2]]
-#write.table(res[[2]], "Soil_Factory_Environment_Tukey_result.txt", sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
+
 
 #sig label
 SF_sig <- data.frame(
@@ -334,7 +329,7 @@ SF_sig <- data.frame(
 )
 
 
-###组合图， Area_Microbiome  区域作为分面  Root and Soil | Factory
+# Root and Soil | Factory
 Factory_SE <- rbind(metadata_R_H_SE, metadata_S_H_SE)
 Factory_sig <- rbind(RF_sig, SF_sig)
 
@@ -349,10 +344,10 @@ Factory_shannon$Environment <- factor(Factory_shannon$Environment,levels = c("in
 Factory_shannon$niche <- factor(Factory_shannon$niche, levels = c("Root","Soil"))
 
 
-#成图  Village(indoor vs outdoor) | Root and Soil
+# Village(indoor vs outdoor) | Root and Soil
 
 pf_environment <- ggplot(Factory_SE, aes(Environment, shannon_entropy, fill=Environment)) + 
-  geom_bar(stat="identity", width = 0.8,color="black") +# 添加color="black"来设置柱子的边框颜色
+  geom_bar(stat="identity", width = 0.8,color="black") +
   facet_grid( ~ niche, scales = "free", space = "free", switch = "x") +
   scale_fill_manual(values=col_environemt) +
   xlab("") + ylab("Shannon index ") + 
@@ -374,19 +369,19 @@ pf_environment <- ggplot(Factory_SE, aes(Environment, shannon_entropy, fill=Envi
         plot.title =element_text(size=14,color="black", hjust = 0.5, vjust = 1))+
   geom_jitter(data = Factory_shannon, aes(Environment, shannon_entropy), size=3, width = 0.2, alpha = 0.6) +
   geom_errorbar(data = Factory_SE, aes(ymin=shannon_entropy-se, ymax=shannon_entropy+se), width=0.2, colour = "black") +
-  scale_y_continuous(limits = c(NA, 11), breaks = seq(0, 10.0, by = 2.5)) # 设置 y 轴的最大值
+  scale_y_continuous(limits = c(NA, 11), breaks = seq(0, 10.0, by = 2.5)) 
 
 p3 <-pf_environment +  
   stat_pvalue_manual(
-    Factory_sig,                                          #数据框
-    label = "{p.adj.signif}",              #选择的标签，"{p.adj}{p.adj.signif}" 能选择两列作为标签
-    y.position = "y.position",        #标签的位置，需要依据成图的数据计算出来。字符刻度  中  每个字符代表一个单位，如 A 就是1， B就是2等等
-    xmin = "xmin",                            #标签下的比较线的起始位置，与xmax搭配使用，控制比较线的长度
-    xmax = "xmax",                           #
-    tip.length = 0.01,                      #比较线的粗细
+    Factory_sig,                                       
+    label = "{p.adj.signif}",             
+    y.position = "y.position",      
+    xmin = "xmin",                           
+    xmax = "xmax",                          
+    tip.length = 0.01,                      
     size = 4,
     label.fontface = "italic" ,
-    coord.flip = F                     #T：翻转标签， F：不翻转，默认不翻转
+    coord.flip = F                     
   ) 
 
 p3

@@ -70,7 +70,7 @@ p <- ggtree(tree, layout = "fan", branch.length="none",ladderize = F, linewidth 
 
 p
 
-p <- p %<+% data1[,]  #要保证data1的第一列与p中的label列相同,内容顺序倒是没有要求一致
+p <- p %<+% data1[,]  #要保证data1的第一列与p中的label列相同
 head(p$data)
 p$data$label <- gsub('_', '', p$data$label)
 

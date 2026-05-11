@@ -51,7 +51,7 @@ p2 <- upset(fromList(metal_0.05degs_listinput), nsets = 3,
 
 p2
 
-pdf("Metal_logfc_2_qval_0.05_degs_upset.pdf", width = 7, height = 5)
+pdf("../../figures/Fig.7/Metal_logfc_2_qval_0.05_degs_upset.pdf", width = 7, height = 5)
 print(p2)
 dev.off()
 
@@ -96,7 +96,7 @@ metal_tpm_heatmap_hclust <- Heatmap(metal_tpm_heatmap_scale, name = "Z-score (lo
                                 cluster_rows = dend, split = 4)
 
 metal_tpm_heatmap_hclust
-dev.copy(pdf, "metal_logfc_2_qval_0.05_degs_norm_tpm_heatmap_scale.pdf", width = 7, height = 8)
+dev.copy(pdf, "../../figures/Fig.7/metal_logfc_2_qval_0.05_degs_norm_tpm_heatmap_scale.pdf", width = 7, height = 8)
 dev.off()
 
 
